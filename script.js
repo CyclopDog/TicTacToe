@@ -10,6 +10,9 @@ const Manager = (() => {
   let player1 = factoryPlayer();
   let player2 = factoryPlayer();
 
+  let toggle = 0;
+  let currentPlayer;
+
   const start = () => {
     document.querySelector("#name-form").addEventListener("submit", function(e) {
       e.preventDefault();
@@ -20,17 +23,26 @@ const Manager = (() => {
       player2.name = document.querySelector("#name-form #p2name").value;
       player2.symbol = player1.symbol == "X" ? "O" : "X";
 
+      currentPlayer = turn();
       Ui.setup(player1, player2);
       Gameboard.setup();
-      turn();
+      displayTurn(currentPlayer);
     });
   }
 
   const turn = () => {
-    document.querySelector("#turn").innerHTML = Math.random();
+    return toggle == 0 ? player1 : player2;
   }
 
-  return {start, turn}
+  const displayTurn = (player) => {
+    document.querySelector("#turn").innerHTML = `${player.name}'s turn`;
+  }
+
+  const toggler = () => {
+    toggle == 0 ? toggle = 1 : toggle = 0;
+  }
+
+  return {start, toggler, turn}
 })();
 
 const Ui = (() => {
@@ -43,7 +55,11 @@ const Ui = (() => {
 })();
 
 const Gameboard = (() => {
-    let board = [["X", "O", "O"],["X", "O", "O"],["X", "O", "O"]];
+    let board = [["1", "2", "3"],["4", "5", "6"],["7", "8", "9"]];
+
+    let boardInput = (row, col) => {
+      board[row][col] = currentPlayer.symbol;
+    };
 
     let setup = () => {
       for (let i = 1; i <= 3; i++){
@@ -52,7 +68,8 @@ const Gameboard = (() => {
           ele.addEventListener('click', event => {
             // check if empty
             // know which player is making the move
-            ele.innerHTML = "move: " + i + " " + j;
+            ele.innerHTML = board[i-1][j-1];
+            Manager.toggler();
             Manager.turn();
           });
         }
