@@ -56,24 +56,29 @@ const Ui = (() => {
 const Gameboard = (() => {
     let board = [[],[],[]];
     let winPositions =  [
-      [[0,0],[0,1],[0,2]], 
-      [[1,0],[1,1],[1,2]], 
+      [[0,0],[0,1],[0,2]],
+      [[1,0],[1,1],[1,2]],
       [[2,0],[2,1],[2,2]],
 
-      [[0,0],[1,0],[2,0]], 
-      [[0,1],[1,1],[2,1]], 
+      [[0,0],[1,0],[2,0]],
+      [[0,1],[1,1],[2,1]],
       [[0,2],[1,2],[2,2]],
 
-      [[0,0],[1,1],[2,2]], 
+      [[0,0],[1,1],[2,2]],
       [[2,0],[1,1],[0,2]]
     ];
 
     let gameover = () => {
+
       for (let i = 0; i < winPositions.length; i++) {
-        for (let j = 0; j < 2; j++) {
-          board[winPositions[i][j]]
-        }
+        let pos1 = board[winPositions[i][0][0],winPositions[i][0][1]];
+        let pos2 = board[winPositions[i][1][0],winPositions[i][1][1]];
+        let pos3 = board[winPositions[i][2][0],winPositions[i][2][1]];
+        console.log(pos1);
+        // let win = (pos1 == pos2) && (pos2 == pos3) && pos1 && pos2 && pos3;
+        // if(win){return true;}
       }
+      return false;
     };
 
     let updateBoard = (row, col) => {
@@ -85,9 +90,10 @@ const Gameboard = (() => {
         document.querySelector("#message").innerHTML = "Position taken, try a different move.";
         return false;
       }
-      // else if(gameover){
-      //
-      // }
+      else if(gameover()){
+        document.querySelector("#message").innerHTML = "GAME OVER :)";
+        return false;
+      }
       else{ return true;}
     }
 
