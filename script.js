@@ -55,6 +55,26 @@ const Ui = (() => {
 
 const Gameboard = (() => {
     let board = [[],[],[]];
+    let winPositions =  [
+      [[0,0],[0,1],[0,2]], 
+      [[1,0],[1,1],[1,2]], 
+      [[2,0],[2,1],[2,2]],
+
+      [[0,0],[1,0],[2,0]], 
+      [[0,1],[1,1],[2,1]], 
+      [[0,2],[1,2],[2,2]],
+
+      [[0,0],[1,1],[2,2]], 
+      [[2,0],[1,1],[0,2]]
+    ];
+
+    let gameover = () => {
+      for (let i = 0; i < winPositions.length; i++) {
+        for (let j = 0; j < 2; j++) {
+          board[winPositions[i][j]]
+        }
+      }
+    };
 
     let updateBoard = (row, col) => {
       board[row][col] = Manager.curSymbol();
@@ -97,7 +117,7 @@ const Gameboard = (() => {
       })
     }
 
-    return {board, print, setup}
+    return {board, print, setup, gameover}
 })();
 
 
