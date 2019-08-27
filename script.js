@@ -50,35 +50,38 @@ const Ui = (() => {
     document.querySelector("table").style.display = "block";
     document.querySelector("#intro").innerHTML = `${p1.name}(${p1.symbol}) vs ${p2.name}(${p2.symbol})`;
   }
-  return {setup};
+  const clearMsg = () => {
+    document.querySelector("#message").innerHTML = "";
+  }
+  const gameOver = () => {
+    document.querySelector("#message").innerHTML = "GAME OVER :)";
+    document.querySelector("#turn").innerHTML = "";
+    document.querySelector("table").style.pointerEvents = "none";
+  }
+
+  return {setup, clearMsg, gameOver};
 })();
 
 const Gameboard = (() => {
     let board = [[],[],[]];
-    let winPositions =  [
-      [[0,0],[0,1],[0,2]],
-      [[1,0],[1,1],[1,2]],
-      [[2,0],[2,1],[2,2]],
 
-      [[0,0],[1,0],[2,0]],
-      [[0,1],[1,1],[2,1]],
-      [[0,2],[1,2],[2,2]],
-
-      [[0,0],[1,1],[2,2]],
-      [[2,0],[1,1],[0,2]]
-    ];
-
-    let gameover = () => {
-
-      for (let i = 0; i < winPositions.length; i++) {
-        let pos1 = board[winPositions[i][0][0],winPositions[i][0][1]];
-        let pos2 = board[winPositions[i][1][0],winPositions[i][1][1]];
-        let pos3 = board[winPositions[i][2][0],winPositions[i][2][1]];
-        console.log(pos1);
-        // let win = (pos1 == pos2) && (pos2 == pos3) && pos1 && pos2 && pos3;
-        // if(win){return true;}
+    let gameOn = () => {
+      let winCombos = [];
+      winCombos.push(board[0].join(""));
+      winCombos.push(board[1].join(""));
+      winCombos.push(board[2].join(""));
+      winCombos.push([board[0][0], board[1][0], board[2][0]].join(""));
+      winCombos.push([board[0][1], board[1][1], board[2][1]].join(""));
+      winCombos.push([board[0][2], board[1][2], board[2][2]].join(""));
+      winCombos.push([board[0][0], board[1][1], board[2][2]].join(""));
+      winCombos.push([board[0][2], board[1][1], board[2][0]].join(""));
+      for(let i = 0; i < winCombos.length; i++){
+        if (winCombos[i] == "XXX" || winCombos[i] == "OOO"){
+          Ui.gameOver();
+          return false;
+        }
       }
-      return false;
+      return true;
     };
 
     let updateBoard = (row, col) => {
@@ -90,10 +93,6 @@ const Gameboard = (() => {
         document.querySelector("#message").innerHTML = "Position taken, try a different move.";
         return false;
       }
-      else if(gameover()){
-        document.querySelector("#message").innerHTML = "GAME OVER :)";
-        return false;
-      }
       else{ return true;}
     }
 
@@ -103,11 +102,13 @@ const Gameboard = (() => {
           let ele = document.querySelector(`tr:nth-child(${i}) td:nth-child(${j})`);
           ele.addEventListener('click', event => {
             if (checkBoard(i-1, j-1)){
-              document.querySelector("#message").innerHTML = "";
+              Ui.clearMsg();
               updateBoard(i-1, j-1);
               ele.innerHTML = board[i-1][j-1];
-              Manager.toggler();
-              Manager.displayTurn();
+              if (gameOn()){
+                Manager.toggler();
+                Manager.displayTurn();
+              }
             }
           });
         }
@@ -123,7 +124,7 @@ const Gameboard = (() => {
       })
     }
 
-    return {board, print, setup, gameover}
+    return {board, print, setup}
 })();
 
 
