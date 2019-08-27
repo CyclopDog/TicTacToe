@@ -11,7 +11,7 @@ const Manager = (() => {
   let player2 = factoryPlayer();
 
   let toggle = 0;
-  let currentPlayer;
+  let currentPlayer = player1;
 
   const start = () => {
     document.querySelector("#name-form").addEventListener("submit", function(e) {
@@ -23,26 +23,25 @@ const Manager = (() => {
       player2.name = document.querySelector("#name-form #p2name").value;
       player2.symbol = player1.symbol == "X" ? "O" : "X";
 
-      currentPlayer = turn();
+
       Ui.setup(player1, player2);
       Gameboard.setup();
-      displayTurn(currentPlayer);
+      displayTurn();
     });
-  }
-
-  const turn = () => {
-    return toggle == 0 ? player1 : player2;
-  }
-
-  const displayTurn = (player) => {
-    document.querySelector("#turn").innerHTML = `${player.name}'s turn`;
   }
 
   const toggler = () => {
     toggle == 0 ? toggle = 1 : toggle = 0;
+    currentPlayer = toggle == 0 ? player1 : player2;
   }
 
-  return {start, toggler, turn}
+  const displayTurn = () => {
+    document.querySelector("#turn").innerHTML = `${currentPlayer.name}'s turn`;
+  }
+
+  let curSymbol = () => currentPlayer.symbol;
+
+  return {start, toggler, displayTurn, curSymbol}
 })();
 
 const Ui = (() => {
@@ -55,22 +54,35 @@ const Ui = (() => {
 })();
 
 const Gameboard = (() => {
-    let board = [["1", "2", "3"],["4", "5", "6"],["7", "8", "9"]];
+    let board = [[],[],[]];
 
-    let boardInput = (row, col) => {
-      board[row][col] = currentPlayer.symbol;
+    let updateBoard = (row, col) => {
+      board[row][col] = Manager.curSymbol();
     };
+
+    let checkBoard = (row, col) => {
+      if (board[row][col]){
+        document.querySelector("#message").innerHTML = "Position taken, try a different move.";
+        return false;
+      }
+      // else if(gameover){
+      //
+      // }
+      else{ return true;}
+    }
 
     let setup = () => {
       for (let i = 1; i <= 3; i++){
         for (let j = 1; j <= 3; j++){
           let ele = document.querySelector(`tr:nth-child(${i}) td:nth-child(${j})`);
           ele.addEventListener('click', event => {
-            // check if empty
-            // know which player is making the move
-            ele.innerHTML = board[i-1][j-1];
-            Manager.toggler();
-            Manager.turn();
+            if (checkBoard(i-1, j-1)){
+              document.querySelector("#message").innerHTML = "";
+              updateBoard(i-1, j-1);
+              ele.innerHTML = board[i-1][j-1];
+              Manager.toggler();
+              Manager.displayTurn();
+            }
           });
         }
       }
