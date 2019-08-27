@@ -1,10 +1,21 @@
+body{padding:20px;}
+
 table td{
   width:100px;
   height:100px;
-  /* border:2px solid black; */
   text-align: center;
 }
-
+table{
+  margin-top:50px;
+  display:none;
+}
+label{display:block;}
 #playerName {
   display: block;
 }
+input[type="submit"]{
+
+}
+form{}
+
+select{margin-bottom:30px;}
