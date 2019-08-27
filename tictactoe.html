@@ -12,20 +12,20 @@
 
     <form id="name-form">
         <label for="text">Player 1 Name: </label>
-        <input type="text" id="p1name" required>
+        <input type="text" id="p1name" required placeholder="Thor">
         <select name="symbol" id="p1symbol">
           <option value="X">X</option>
           <option value="O">O</option>
         </select>
         <label for="text">Player 2 Name: </label>
-        <input type="text" id="p2name" required>
+        <input type="text" id="p2name" required placeholder="Rabbi">
         <br><br>
         <input type="submit" value="Submit">
     </form>
 
-    <p class="p1"></p>
-    <p class="p2"></p>
+    <p id="intro"></p>
 
+    <p id ="turn"></p>
     <table class="table is-bordered">
       <tr>
         <td></td>
