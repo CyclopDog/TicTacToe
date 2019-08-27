@@ -9,10 +9,21 @@
     <title>Tic Tac Toe</title>
 </head>
 <body>
+  
     <form id="playerName">
         <label for="text">Player 1 Name: </label>
-        <input type="text">
+        <input type="text" id="p1name"> <br />
+        <select name="symbol" id="p1symbol">
+          <option value="X">X</option>
+          <option value="O">O</option>
+        </select> <br />
+        <label for="text">Player 2 Name: </label>
+        <input type="text" id="p2name"> <br />
+        <input type="submit" value="Submit">
     </form>
+
+    <p class="p1"></p>
+    <p class="p2"></p>
 
     <table class="table is-bordered">
       <tr>
