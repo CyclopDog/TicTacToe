@@ -25,50 +25,50 @@ const Manager = (() => {
       Gameboard.setup();
       Ui.displayTurn();
     });
-  }
+  };
 
   const toggler = () => {
     toggle == 0 ? toggle = 1 : toggle = 0;
     currentPlayer = toggle == 0 ? player1 : player2;
-  }
+  };
 
   let curPlayer = () => currentPlayer;
 
-  return {start, toggler, curPlayer}
+  return { start, toggler, curPlayer };
 })();
 
 const Ui = (() => {
-  const setup = (p1,p2) => {
+  const setup = (p1, p2) => {
     document.querySelector("#name-form").classList.toggle("hidden");
     document.querySelector("table").classList.toggle("hidden");
     document.querySelector("#intro").innerHTML = `${p1.name}(${p1.symbol}) vs ${p2.name}(${p2.symbol})`;
     document.querySelector("#restart").addEventListener("click", function() {
       location.reload();
-    })
-  }
+    });
+  };
   const clearMsg = () => {
     document.querySelector("#message").innerHTML = "";
-  }
+  };
   const gameOver = (msg) => {
     document.querySelector("#message").innerHTML = msg;
     document.querySelector("#turn").innerHTML = "";
     document.querySelector("table").style.pointerEvents = "none";
     document.querySelector("#restart").classList.toggle("hidden");
-  }
+  };
 
   const positionTaken = () => {
     document.querySelector("#message").innerHTML = "Position taken, try a different move.";
-  }
+  };
 
   const displayTurn = () => {
     document.querySelector("#turn").innerHTML = `${Manager.curPlayer().name}'s turn`;
-  }
+  };
 
-  return {setup, clearMsg, gameOver, positionTaken, displayTurn};
+  return { setup, clearMsg, gameOver, positionTaken, displayTurn };
 })();
 
 const Gameboard = (() => {
-    let board = [[],[],[]];
+    let board = [[], [], []];
 
     let gameOn = () => {
       let winCombos = [];
@@ -84,7 +84,7 @@ const Gameboard = (() => {
       winCombos.push([board[0][0], board[1][1], board[2][2]].join(""));
       winCombos.push([board[0][2], board[1][1], board[2][0]].join(""));
 
-      for(let i = 0; i < winCombos.length; i++){
+      for (let i = 0; i < winCombos.length; i++){
         if (winCombos[i] == "XXX" || winCombos[i] == "OOO"){
           Ui.gameOver(`${Manager.curPlayer().name} is the winner!`);
           return false;
@@ -93,7 +93,7 @@ const Gameboard = (() => {
       if (board.flat().length >= 9) {
         Ui.gameOver("Game is draw!");
         return false;
-      };
+      }
       return true;
     };
 
@@ -105,16 +105,15 @@ const Gameboard = (() => {
       if (board[row][col]){
         Ui.positionTaken();
         return false;
-      }
-      else{ return true;}
-    }
+      } else { return true; }
+    };
 
     let setup = () => {
       for (let i = 1; i <= 3; i++){
         for (let j = 1; j <= 3; j++){
           let ele = document.querySelector(`tr:nth-child(${i}) td:nth-child(${j})`);
           ele.addEventListener('click', event => {
-            if (checkBoard(i-1, j-1)){
+            if (checkBoard(i - 1, j - 1)){
               Ui.clearMsg();
               updateBoard(i-1, j-1);
               ele.innerHTML = board[i-1][j-1];
@@ -126,9 +125,9 @@ const Gameboard = (() => {
           });
         }
       }
-    }
+    };
 
-    return {board, setup}
+    return {board, setup};
 })();
 
 Manager.start();
