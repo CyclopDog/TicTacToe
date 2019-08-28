@@ -3,7 +3,9 @@ body{padding:20px;}
 table td{
   width:100px;
   height:100px;
-  text-align: center;
+  text-align: center !important;
+  vertical-align: middle !important;
+  font-size: 2em;
 }
 
 table tr:first-child td {
@@ -30,8 +32,7 @@ table{
 #playerName {
   display: block;
 }
-/* input[type="text"]{width:80%;} */
-/* form{max-width: 400px;} */
+
 .form{max-width:240px;}
 #restart {
   display: none;
