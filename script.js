@@ -67,14 +67,18 @@ const Gameboard = (() => {
 
     let gameOn = () => {
       let winCombos = [];
+      //rows
       winCombos.push(board[0].join(""));
       winCombos.push(board[1].join(""));
       winCombos.push(board[2].join(""));
+      //cols
       winCombos.push([board[0][0], board[1][0], board[2][0]].join(""));
       winCombos.push([board[0][1], board[1][1], board[2][1]].join(""));
       winCombos.push([board[0][2], board[1][2], board[2][2]].join(""));
+      //diags
       winCombos.push([board[0][0], board[1][1], board[2][2]].join(""));
       winCombos.push([board[0][2], board[1][1], board[2][0]].join(""));
+
       for(let i = 0; i < winCombos.length; i++){
         if (winCombos[i] == "XXX" || winCombos[i] == "OOO"){
           Ui.gameOver();
