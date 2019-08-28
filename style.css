@@ -26,17 +26,13 @@ table{
   margin-top:50px;
   display:none;
 }
-label{display:block;}
+
 #playerName {
   display: block;
 }
-input[type="submit"]{
-
-}
-form{}
-
-select{margin-bottom:30px;}
-
+/* input[type="text"]{width:80%;} */
+/* form{max-width: 400px;} */
+.form{max-width:240px;}
 #restart {
   display: none;
 }

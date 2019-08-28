@@ -9,25 +9,42 @@
     <title>Tic Tac Toe</title>
 </head>
 <body>
+  <div class="form">
+    <form id="name-form" >
+      <label for="text" class="label is-small">Player 1 Name: </label>
+      <div class="field has-addons">
+        <p class="control">
 
-    <form id="name-form">
-        <label for="text">Player 1 Name: </label>
-        <input type="text" id="p1name" placeholder="Thor" required>
-        <select name="symbol" id="p1symbol">
-          <option value="X">X</option>
-          <option value="O">O</option>
-        </select>
-        <label for="text">Player 2 Name: </label>
-        <input type="text" id="p2name" placeholder="Rabbi" required>
-        <br><br>
-        <input type="submit" value="Submit">
-    </form>
+          <input type="text" id="p1name" class="input" placeholder="Thor" required>
+        </p>
+        <p class="control">
+          <span class="select">
+            <select name="symbol" id="p1symbol">
+              <option value="X">X</option>
+              <option value="O">O</option>
+            </select>
+          </span>
+        </p>
 
-    <p id="intro"></p>
-    <p id ="turn"></p>
+      </div>
 
-    <p id ="message"></p>
-    <button id="restart">Play Again</button>
+      <div class="field">
+        <label for="text" class="label is-small">Player 2 Name: </label>
+        <input type="text" id="p2name" class="input" placeholder="Rabbi" required>
+      </div>
+
+      <div class="field">
+        <input type="submit" value="Submit" class="button is-primary is-outlined">
+      </div>
+
+      </form>
+    </div>
+    <div class="content">
+      <h2 id="intro"></h2>
+      <p id ="turn" ></p>
+      <p id ="message"></p>
+      <button id="restart" class="button">Play Again</button>
+    </div>
     <table class="table is-bordered">
       <tr>
         <td></td>

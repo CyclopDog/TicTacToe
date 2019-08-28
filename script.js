@@ -1,7 +1,4 @@
 const factoryPlayer = (name = "", symbol = "") => {
-  let move = (pos) => {
-
-  }
   return { name, symbol };
 };
 
@@ -26,7 +23,7 @@ const Manager = (() => {
 
       Ui.setup(player1, player2);
       Gameboard.setup();
-      displayTurn();
+      Ui.displayTurn();
     });
   }
 
@@ -35,13 +32,9 @@ const Manager = (() => {
     currentPlayer = toggle == 0 ? player1 : player2;
   }
 
-  const displayTurn = () => {
-    document.querySelector("#turn").innerHTML = `${currentPlayer.name}'s turn`;
-  }
-
   let curPlayer = () => currentPlayer;
 
-  return {start, toggler, displayTurn, curPlayer}
+  return {start, toggler, curPlayer}
 })();
 
 const Ui = (() => {
@@ -67,7 +60,11 @@ const Ui = (() => {
     document.querySelector("#message").innerHTML = "Position taken, try a different move.";
   }
 
-  return {setup, clearMsg, gameOver, positionTaken};
+  const displayTurn = () => {
+    document.querySelector("#turn").innerHTML = `${Manager.curPlayer().name}'s turn`;
+  }
+
+  return {setup, clearMsg, gameOver, positionTaken, displayTurn};
 })();
 
 const Gameboard = (() => {
@@ -75,15 +72,15 @@ const Gameboard = (() => {
 
     let gameOn = () => {
       let winCombos = [];
-      //rows
+      //row wins
       winCombos.push(board[0].join(""));
       winCombos.push(board[1].join(""));
       winCombos.push(board[2].join(""));
-      //cols
+      //col wins
       winCombos.push([board[0][0], board[1][0], board[2][0]].join(""));
       winCombos.push([board[0][1], board[1][1], board[2][1]].join(""));
       winCombos.push([board[0][2], board[1][2], board[2][2]].join(""));
-      //diags
+      //diag wins
       winCombos.push([board[0][0], board[1][1], board[2][2]].join(""));
       winCombos.push([board[0][2], board[1][1], board[2][0]].join(""));
 
@@ -123,7 +120,7 @@ const Gameboard = (() => {
               ele.innerHTML = board[i-1][j-1];
               if (gameOn()){
                 Manager.toggler();
-                Manager.displayTurn();
+                Ui.displayTurn();
               }
             }
           });
@@ -131,16 +128,7 @@ const Gameboard = (() => {
       }
     }
 
-    let print = () => {
-      board.forEach( (row, i) => {
-        row.forEach((ele, j) => {
-          let position = document.querySelector(`tr:nth-child(${i + 1}) td:nth-child(${j + 1})`);
-          position.innerHTML = ele;
-        })
-      })
-    }
-
-    return {board, print, setup}
+    return {board, setup}
 })();
 
 
