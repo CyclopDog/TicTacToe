@@ -39,9 +39,9 @@ const Manager = (() => {
     document.querySelector("#turn").innerHTML = `${currentPlayer.name}'s turn`;
   }
 
-  let curSymbol = () => currentPlayer.symbol;
+  let curPlayer = () => currentPlayer;
 
-  return {start, toggler, displayTurn, curSymbol}
+  return {start, toggler, displayTurn, curPlayer}
 })();
 
 const Ui = (() => {
@@ -49,17 +49,25 @@ const Ui = (() => {
     document.querySelector("#name-form").style.display = "none";
     document.querySelector("table").style.display = "block";
     document.querySelector("#intro").innerHTML = `${p1.name}(${p1.symbol}) vs ${p2.name}(${p2.symbol})`;
+    document.querySelector("#restart").addEventListener("click", function() {
+      location.reload();
+    })
   }
   const clearMsg = () => {
     document.querySelector("#message").innerHTML = "";
   }
-  const gameOver = () => {
-    document.querySelector("#message").innerHTML = "GAME OVER :)";
+  const gameOver = (msg) => {
+    document.querySelector("#message").innerHTML = msg;
     document.querySelector("#turn").innerHTML = "";
     document.querySelector("table").style.pointerEvents = "none";
+    document.querySelector("#restart").style.display = "block";
   }
 
-  return {setup, clearMsg, gameOver};
+  const positionTaken = () => {
+    document.querySelector("#message").innerHTML = "Position taken, try a different move.";
+  }
+
+  return {setup, clearMsg, gameOver, positionTaken};
 })();
 
 const Gameboard = (() => {
@@ -81,20 +89,24 @@ const Gameboard = (() => {
 
       for(let i = 0; i < winCombos.length; i++){
         if (winCombos[i] == "XXX" || winCombos[i] == "OOO"){
-          Ui.gameOver();
+          Ui.gameOver(`${Manager.curPlayer().name} is the winner!`);
           return false;
         }
       }
+      if (board.flat().length >= 9) {
+        Ui.gameOver("Game is draw!");
+        return false;
+      };
       return true;
     };
 
     let updateBoard = (row, col) => {
-      board[row][col] = Manager.curSymbol();
+      board[row][col] = Manager.curPlayer().symbol;
     };
 
     let checkBoard = (row, col) => {
       if (board[row][col]){
-        document.querySelector("#message").innerHTML = "Position taken, try a different move.";
+        Ui.positionTaken();
         return false;
       }
       else{ return true;}

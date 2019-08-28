@@ -36,3 +36,7 @@ input[type="submit"]{
 form{}
 
 select{margin-bottom:30px;}
+
+#restart {
+  display: none;
+}

@@ -12,13 +12,13 @@
 
     <form id="name-form">
         <label for="text">Player 1 Name: </label>
-        <input type="text" id="p1name" placeholder="Thor">
+        <input type="text" id="p1name" placeholder="Thor" required>
         <select name="symbol" id="p1symbol">
           <option value="X">X</option>
           <option value="O">O</option>
         </select>
         <label for="text">Player 2 Name: </label>
-        <input type="text" id="p2name" placeholder="Rabbi">
+        <input type="text" id="p2name" placeholder="Rabbi" required>
         <br><br>
         <input type="submit" value="Submit">
     </form>
@@ -27,6 +27,7 @@
     <p id ="turn"></p>
 
     <p id ="message"></p>
+    <button id="restart">Play Again</button>
     <table class="table is-bordered">
       <tr>
         <td></td>
