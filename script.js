@@ -4,8 +4,8 @@ const factoryPlayer = (name = "", symbol = "") => {
 
 const Manager = (() => {
 
-  let player1 = factoryPlayer();
-  let player2 = factoryPlayer();
+  const player1 = factoryPlayer();
+  const player2 = factoryPlayer();
 
   let toggle = 0;
   let currentPlayer = player1;
@@ -39,8 +39,8 @@ const Manager = (() => {
 
 const Ui = (() => {
   const setup = (p1,p2) => {
-    document.querySelector("#name-form").style.display = "none";
-    document.querySelector("table").style.display = "block";
+    document.querySelector("#name-form").classList.toggle("hidden");
+    document.querySelector("table").classList.toggle("hidden");
     document.querySelector("#intro").innerHTML = `${p1.name}(${p1.symbol}) vs ${p2.name}(${p2.symbol})`;
     document.querySelector("#restart").addEventListener("click", function() {
       location.reload();
@@ -53,7 +53,7 @@ const Ui = (() => {
     document.querySelector("#message").innerHTML = msg;
     document.querySelector("#turn").innerHTML = "";
     document.querySelector("table").style.pointerEvents = "none";
-    document.querySelector("#restart").style.display = "block";
+    document.querySelector("#restart").classList.toggle("hidden");
   }
 
   const positionTaken = () => {
@@ -131,6 +131,4 @@ const Gameboard = (() => {
     return {board, setup}
 })();
 
-
-// Start Game
 Manager.start();

@@ -26,7 +26,6 @@ table tr td:last-child {
 
 table{
   margin-top:50px;
-  display:none;
 }
 
 #playerName {
@@ -34,6 +33,7 @@ table{
 }
 
 .form{max-width:240px;}
-#restart {
+
+.hidden {
   display: none;
 }
