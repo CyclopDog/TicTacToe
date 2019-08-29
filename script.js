@@ -11,7 +11,7 @@ const Manager = (() => {
   let currentPlayer = player1;
 
   const start = () => {
-    document.querySelector("#name-form").addEventListener("submit", function(e) {
+    document.querySelector("#name-form").addEventListener("submit", e => {
       e.preventDefault();
 
       player1.name = document.querySelector("#name-form #p1name").value;
