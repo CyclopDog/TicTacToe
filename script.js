@@ -1,7 +1,5 @@
 /* eslint-disable max-len */
-const factoryPlayer = (name = '', symbol = '') => {
-  return {name, symbol};
-};
+const factoryPlayer = (name = '', symbol = '') => ({ name, symbol });
 
 const Manager = (() => {
   const player1 = factoryPlayer();
@@ -28,13 +26,13 @@ const Manager = (() => {
   };
 
   const toggler = () => {
-    toggle == 0 ? toggle = 1 : toggle = 0;
-    currentPlayer = toggle == 0 ? player1 : player2;
+    toggle === 0 ? toggle = 1 : toggle = 0;
+    currentPlayer = toggle === 0 ? player1 : player2;
   };
 
   const curPlayer = () => currentPlayer;
 
-  return {start, toggler, curPlayer};
+  return { start, toggler, curPlayer };
 })();
 
 const Ui = (() => {
@@ -42,7 +40,7 @@ const Ui = (() => {
     document.querySelector('#name-form').classList.toggle('hidden');
     document.querySelector('table').classList.toggle('hidden');
     document.querySelector('#intro').innerHTML = `${p1.name}(${p1.symbol}) vs ${p2.name}(${p2.symbol})`;
-    document.querySelector('#restart').addEventListener('click', function() {
+    document.querySelector('#restart').addEventListener('click', () => {
       location.reload();
     });
   };
@@ -64,7 +62,9 @@ const Ui = (() => {
     document.querySelector('#turn').innerHTML = `${Manager.curPlayer().name}'s turn`;
   };
 
-  return {setup, clearMsg, gameOver, positionTaken, displayTurn};
+  return {
+    setup, clearMsg, gameOver, positionTaken, displayTurn,
+  };
 })();
 
 const Gameboard = (() => {
@@ -85,7 +85,7 @@ const Gameboard = (() => {
     winCombos.push([board[0][2], board[1][1], board[2][0]].join(''));
 
     for (let i = 0; i < winCombos.length; i++) {
-      if (winCombos[i] == 'XXX' || winCombos[i] == 'OOO') {
+      if (winCombos[i] === 'XXX' || winCombos[i] === 'OOO') {
         Ui.gameOver(`${Manager.curPlayer().name} is the winner!`);
         return false;
       }
@@ -105,20 +105,19 @@ const Gameboard = (() => {
     if (board[row][col]) {
       Ui.positionTaken();
       return false;
-    } else {
-      return true;
     }
+    return true;
   };
 
   const setup = () => {
     for (let i = 1; i <= 3; i++) {
       for (let j = 1; j <= 3; j++) {
         const ele = document.querySelector(`tr:nth-child(${i}) td:nth-child(${j})`);
-        ele.addEventListener('click', (event) => {
+        ele.addEventListener('click', () => {
           if (checkBoard(i - 1, j - 1)) {
             Ui.clearMsg();
-            updateBoard(i-1, j-1);
-            ele.innerHTML = board[i-1][j-1];
+            updateBoard(i - 1, j - 1);
+            ele.innerHTML = board[i - 1][j - 1];
             if (gameOn()) {
               Manager.toggler();
               Ui.displayTurn();
@@ -129,7 +128,7 @@ const Gameboard = (() => {
     }
   };
 
-  return {board, setup};
+  return { board, setup };
 })();
 
 Manager.start();
