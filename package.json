@@ -1,0 +1,23 @@
+{
+  "name": "tictactoe",
+  "version": "1.0.0",
+  "description": "2 player tic-tac-toe game, cats only.",
+  "main": "script.js",
+  "dependencies": {
+    "eslint": "^6.2.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevMFernandes/TicTacToe.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DevMFernandes/TicTacToe/issues"
+  },
+  "homepage": "https://github.com/DevMFernandes/TicTacToe#readme"
+}
