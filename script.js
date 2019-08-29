@@ -1,3 +1,7 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-use-before-define */
+/* eslint-disable eqeqeq */
 /* eslint-disable max-len */
 const factoryPlayer = (name = '', symbol = '') => ({ name, symbol });
 
@@ -41,6 +45,7 @@ const Ui = (() => {
     document.querySelector('table').classList.toggle('hidden');
     document.querySelector('#intro').innerHTML = `${p1.name}(${p1.symbol}) vs ${p2.name}(${p2.symbol})`;
     document.querySelector('#restart').addEventListener('click', () => {
+      // eslint-disable-next-line no-restricted-globals
       location.reload();
     });
   };
